@@ -1,0 +1,31 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "[39,)" #mandatory
+issueTrackerURL = "https://github.com/Lomeli12/ForgeKnit/issues" #optional
+license = "LGPLv3"
+
+[[mods]]
+modId = "knit"
+version = "${file.jarVersion}"
+displayName = "Knit"
+#updateJSONURL = "https://raw.githubusercontent.com/Lomeli12/ForgeKnit/main/forge-update.json"
+displayURL = "http://lomeli12.net/"
+#logoFile = "logo.png"
+credits = "Lomeli"
+authors = "Lomeli"
+description = '''
+A simple library mod for Lomeli's mods.
+'''
+
+[[dependencies.knit]]
+modId = "forge"
+mandatory = true
+versionRange = "[39,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.knit]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18,)"
+ordering = "NONE"
+side = "BOTH"

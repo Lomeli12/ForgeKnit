@@ -1,0 +1,4 @@
+{
+  "config.knit.test_config.string": "This is a test config string",
+  "config.knit.test_config.int": "This is a test config int"
+}
