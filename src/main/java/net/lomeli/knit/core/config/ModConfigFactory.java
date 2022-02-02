@@ -8,17 +8,17 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ModConfigFactory {
-    public SidedConfig commonConfig;
-    public SidedConfig clientConfig;
-    public SidedConfig serverConfig;
+    private final PolarConfig commonConfig;
+    private final PolarConfig clientConfig;
+    private final PolarConfig serverConfig;
 
-    public final String modID;
+    private final String modID;
 
     public ModConfigFactory(String modID) {
         this.modID = modID;
-        this.commonConfig = new SidedConfig(modID);
-        this.clientConfig = new SidedConfig(modID);
-        this.serverConfig = new SidedConfig(modID);
+        this.commonConfig = new PolarConfig(modID);
+        this.clientConfig = new PolarConfig(modID);
+        this.serverConfig = new PolarConfig(modID);
     }
 
     public ModConfigFactory addConfig(ModConfig.Type type, Class<?> clazz) {
@@ -61,8 +61,8 @@ public class ModConfigFactory {
 
     public void reloadConfigs() {
         commonConfig.reloadConfig();
-        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> serverConfig.reloadConfig());
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> clientConfig.reloadConfig());
+        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> serverConfig::reloadConfig);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> clientConfig::reloadConfig);
     }
 
     public void configEvent(final ModConfigEvent event) {
@@ -75,5 +75,21 @@ public class ModConfigFactory {
             if (serverConfig.containsSpecs() && config.getSpec() == serverConfig.getSpec())
                 DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> serverConfig.bakeConfig(config));
         }
+    }
+
+    public PolarConfig getCommonConfig() {
+        return commonConfig;
+    }
+
+    public PolarConfig getClientConfig() {
+        return clientConfig;
+    }
+
+    public PolarConfig getServerConfig() {
+        return serverConfig;
+    }
+
+    public String getModID() {
+        return modID;
     }
 }

@@ -16,7 +16,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class SidedConfig {
+// Renamed it since SidedConfig doesn't make sense when the COMMON config type exists.
+public class PolarConfig {
     private final List<Class<?>> configClasses;
     @SuppressWarnings("rawtypes")
     private final Map<Field, ForgeConfigSpec.ConfigValue> configValues;
@@ -24,7 +25,7 @@ public class SidedConfig {
     private ForgeConfigSpec configSpec;
     private ModConfig config;
 
-    public SidedConfig(String modID) {
+    public PolarConfig(String modID) {
         this.modID = modID;
         configClasses = Lists.newArrayList();
         configValues = Maps.newHashMap();
@@ -72,12 +73,15 @@ public class SidedConfig {
                     builder.pop();
                     needsPop.set(false);
                 }
+
                 currentCategory.set(configInfo.category());
+
                 if (!Strings.isNullOrEmpty(configInfo.categoryComment()))
                     builder.comment(configInfo.categoryComment());
                 //TODO: Fix translation. Only doesn't use translation key properly
                 if (!Strings.isNullOrEmpty(configInfo.categoryTranslation()))
                     builder.translation(configInfo.categoryTranslation());
+
                 builder.push(currentCategory.get());
                 needsPop.set(true);
             }
