@@ -30,6 +30,11 @@ public class ModConfigFactory {
         return this;
     }
 
+    public ModConfigFactory registerConfigGUI() {
+        //TODO: Write a generic implementation of ConfigGuiHandler.ConfigGuiFactory and register to ModLoadingContext.get().getActiveContainer().registerExtensionPoint()
+        return this;
+    }
+
     public void build() {
         commonConfig.buildSpec();
         if (commonConfig.containsSpecs() && commonConfig.getSpec() != null)
